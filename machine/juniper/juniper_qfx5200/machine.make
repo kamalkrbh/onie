@@ -1,5 +1,4 @@
-# ufiSpace S9705 Series
-# CPU Module: Intel Xeon Broadwell-DE 
+# Juniper Networks QFX5200 
 
 ONIE_ARCH ?= x86_64
 SWITCH_ASIC_VENDOR = bcm
@@ -8,7 +7,7 @@ VENDOR_REV ?= 0
 
 # Translate hardware revision to ONIE hardware revision
 ifeq ($(VENDOR_REV),0)
-  MACHINE_REV = 7
+  MACHINE_REV = 0
 else
   $(warning Unknown VENDOR_REV '$(VENDOR_REV)' for MACHINE '$(MACHINE)')
   $(error Unknown VENDOR_REV)
@@ -17,40 +16,38 @@ endif
 # The VENDOR_VERSION string is appended to the overal ONIE version
 # string.  HW vendors can use this to appended their own versioning
 # information to the base ONIE version string.
-# ONIE Version = onie-release version + VENDOR_VERSION
-VENDOR_VERSION = v08
+VENDOR_VERSION = .0.1
+
+# Vendor ID -- IANA Private Enterprise Number:
+# http://www.iana.org/assignments/enterprise-numbers
+# Juniper Networks Inc.
+VENDOR_ID = 2636
+
+# Enable the i2ctools and the onie-syseeprom command for this platform
+I2CTOOLS_ENABLE = yes
+I2CTOOLS_SYSEEPROM = no
+
+# Console parameters
+CONSOLE_DEV = 0
 
 # Enable UEFI support
 UEFI_ENABLE = yes
 
-# This platform requires the PXE_EFI64 installer
-PXE_EFI64_ENABLE = yes
-
-# Vendor ID -- IANA Private Enterprise Number:
-# http://www.iana.org/assignments/enterprise-numbers
-# Open Compute Project IANA number
-VENDOR_ID = 51242
-
-# Enable the i2ctools command for this platform
-I2CTOOLS_ENABLE = yes
-IPMITOOL_ENABLE = yes
-
-#
-# Console parameters can be defined here (default values are in
-# build-config/arch/x86_64.make).
-#
-CONSOLE_SPEED = 115200
-CONSOLE_DEV = 0
-
 # Set Linux kernel version
-LINUX_VERSION       = 4.1
-LINUX_MINOR_VERSION = 38
+LINUX_VERSION		= 4.9
+LINUX_MINOR_VERSION	= 95
 
-# Older GCC required for older 3.2 kernel
+# ONIE defaults the serial console baud rate to 115200
+CONSOLE_SPEED = 9600
+
+# Older GCC required for older 3.14.27 kernel
 GCC_VERSION = 4.9.2
+
+RECOVERY_DEFAULT_ENTRY = embed
 
 #-------------------------------------------------------------------------------
 #
 # Local Variables:
 # mode: makefile-gmake
 # End:
+

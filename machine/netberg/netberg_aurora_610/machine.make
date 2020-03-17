@@ -1,7 +1,9 @@
-# Alpha Networks STX60D0-062F
+# Netberg Aurora 610
+# CPU Module: Intel Broadwell_DE (C2000)
 
 ONIE_ARCH ?= x86_64
 SWITCH_ASIC_VENDOR = bcm
+UEFI_ENABLE = yes
 
 VENDOR_REV ?= 0
 
@@ -13,37 +15,40 @@ else
   $(error Unknown VENDOR_REV)
 endif
 
-# The VENDOR_VERSION string is appended to the overal ONIE version
-# string.  HW vendors can use this to appended their own versioning
-# information to the base ONIE version string.
-VENDOR_VERSION = .0.1
-
 # Vendor ID -- IANA Private Enterprise Number:
 # http://www.iana.org/assignments/enterprise-numbers
-# Alpha Networks Inc.
-VENDOR_ID = 31874
+VENDOR_ID = 50424
 
-# Enable the i2ctools and the onie-syseeprom command for this platform
+# Skip the i2ctools and the onie-syseeprom command for this platform
 I2CTOOLS_ENABLE = yes
 
-# Console parameters
-CONSOLE_DEV = 1
-
-# Enable UEFI support
-UEFI_ENABLE = yes
-
-# Set Linux kernel version
+# Set the desired kernel version.
 LINUX_VERSION		= 4.9
 LINUX_MINOR_VERSION	= 95
 
-# Older GCC required for older 3.14.27 kernel
-#GCC_VERSION = 4.9.2
+# Use gcc-6.3.0
+GCC_VERSION = 6.3.0
 
-include $(MACHINEDIR)/rootconf/grub-machine.make
+#
+# Console parameters can be defined here 
+# - default values are in build-config/arch/x86_64.make
+# - template files are build-config/recovery/syslinux.cfg and build-config/recovery/grub-pxe.cfg 
+# 
+CONSOLE_FLAG = 1
+CONSOLE_DEV = 0
+
+#
+# rootdelay parameter (only for nos)
+#
+ROOTDELAY = 5
+
+#
+# Use IPMITOOL
+#
+IPMITOOL_ENABLE = yes
 
 #-------------------------------------------------------------------------------
 #
 # Local Variables:
 # mode: makefile-gmake
 # End:
-
